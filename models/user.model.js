@@ -6,8 +6,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    phone: {
+    mobileNo: {
       type: String,
+      unique: true,
       required: true,
     },
     bio: {
@@ -24,3 +25,5 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+module.exports = mongoose.model("User", userSchema);

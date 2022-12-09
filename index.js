@@ -12,9 +12,15 @@ app.use(cors());
 // Parse incoming requests as JSON
 app.use(express.json());
 
+// Importing the required routes
+const userRoute = require("./routes/user.route");
+
+// Use the imported routes
+app.use("/api/v1/user", userRoute);
+
 // Connect to your MongoDB database
 mongoose
-  .set("strictQuery", false)
+  .set("strictQuery", true)
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
