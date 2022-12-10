@@ -10,7 +10,7 @@ const createUser = async (req, res) => {
   const { username, mobileNo } = req.body;
 
   if (!username || !mobileNo) {
-    return res.status(422).json({ error: "Please add all the fields" });
+    return res.status(422).json({ error: "Please enter a username" });
   }
 
   if (!validator.isMobilePhone(mobileNo)) {
