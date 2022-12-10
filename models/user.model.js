@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema(
     bio: {
       type: String,
     },
-    profilePciture: {
+    profilePicture: {
       type: String,
     },
     isVerified: {

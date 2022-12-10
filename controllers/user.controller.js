@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 // @route => POST /api/v1/user/create
 
 const createUser = async (req, res) => {
-  const { username, mobileNo } = req.body;
+  const { username, mobileNo, profilePicture } = req.body;
 
   if (!username || !mobileNo) {
     return res.status(422).json({ error: "Please enter a username" });
@@ -27,6 +27,7 @@ const createUser = async (req, res) => {
     const newUser = new User({
       username: username,
       mobileNo: mobileNo,
+      profilePicture: profilePicture,
     });
 
     await newUser.save();
