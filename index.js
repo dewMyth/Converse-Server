@@ -2,15 +2,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const app = express();
 
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+
 // Use CORS to allow requests from any origin
 app.use(cors());
-
-// Parse incoming requests as JSON
-app.use(express.json());
 
 // Importing the required routes
 const userRoute = require("./routes/user.route");

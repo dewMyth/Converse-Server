@@ -48,4 +48,45 @@ const createUser = async (req, res) => {
   }
 };
 
-module.exports = { createUser };
+const findMyUsers = async (req, res) => {
+  // Get the array of Contacts from the request body
+  const contacts = req.body;
+
+  // Create an empty array to store the phone numbers
+  const phoneNumbers = [];
+
+  // Loop through the array of contacts and push the phone numbers to the phoneNumbers array
+  if (contacts.length === 0) {
+    return res.status(200).json({ myContacts: [] });
+  }
+  contacts.forEach((contact) => {
+    if (contact.phoneNumbers.length === 0) {
+      console.log("No phone number found for => " + contact.displayName);
+    } else {
+      for (let i = 0; i < contact.phoneNumbers.length; i++) {
+        let formattedNo = contact.phoneNumbers[i].number.replace(
+          /[\s\[\]\(\)-]/g,
+          ""
+        );
+        if (contact.phoneNumbers[i].number[0] === "+") {
+          formattedNo = formattedNo.slice(3);
+        }
+        if (formattedNo[0] === "0") {
+          formattedNo = formattedNo.slice(1);
+        }
+        phoneNumbers.push(contact.phoneNumbers[i].number);
+      }
+    }
+  });
+
+  // Find the users in the database whose mobile number is in the phoneNumbers array
+  User.find({ mobileNo: { $in: phoneNumbers } }, (err, users) => {
+    if (err) {
+      return res.status(500).json({ error: "Something went wrong" });
+    } else {
+      return res.status(200).json({ myContacts: users });
+    }
+  });
+};
+
+module.exports = { createUser, findMyUsers };
