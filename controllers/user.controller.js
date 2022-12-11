@@ -74,7 +74,7 @@ const findMyUsers = async (req, res) => {
         if (formattedNo[0] === "0") {
           formattedNo = formattedNo.slice(1);
         }
-        phoneNumbers.push(contact.phoneNumbers[i].number);
+        phoneNumbers.push(formattedNo);
       }
     }
   });
