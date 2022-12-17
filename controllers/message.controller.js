@@ -1,4 +1,5 @@
 const Conversation = require("../models/Conversation.model");
+const Message = require("../models/Message.model");
 
 const createNewConversation = async (req, res) => {
   try {
@@ -38,8 +39,37 @@ const getConversationByOneUser = async (req, res) => {
   }
 };
 
+const createNewMessage = async (req, res) => {
+  try {
+    const { senderId, conversationId, text } = req.body;
+    const newMessage = new Message({
+      conversationId,
+      senderId,
+      text,
+    });
+
+    const savedMessage = await newMessage.save();
+    res.status(200).json(savedMessage);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+const getMessagesByConversationId = async (req, res) => {
+  try {
+    const messages = await Message.find({
+      conversationId: req.params.conversationId,
+    });
+    res.status(200).json(messages);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+};
+
 module.exports = {
   createNewConversation,
   getConversationByTwoUsers,
   getConversationByOneUser,
+  createNewMessage,
+  getMessagesByConversationId,
 };
