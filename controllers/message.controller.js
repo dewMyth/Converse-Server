@@ -48,6 +48,14 @@ const createNewMessage = async (req, res) => {
       text,
     });
 
+    if (
+      !newMessage.senderId ||
+      !newMessage.conversationId ||
+      !newMessage.text
+    ) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     const savedMessage = await newMessage.save();
     res.status(200).json(savedMessage);
   } catch (err) {
