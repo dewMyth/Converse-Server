@@ -89,4 +89,20 @@ const findMyUsers = async (req, res) => {
   });
 };
 
-module.exports = { createUser, findMyUsers };
+// Find a user by their id
+const findUserById = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await User.findById(userId);
+
+    if (user === null) {
+      return res.status(404).json({ message: "Cannot find user" });
+    } else {
+      return res.status(200).json(user);
+    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { createUser, findMyUsers, findUserById };
