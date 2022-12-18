@@ -17,11 +17,13 @@ app.use(cors());
 const userRoute = require("./routes/user.route");
 const fileUploadRoute = require("./routes/file-upload.route");
 const authRoute = require("./routes/auth.route");
+const messageRoute = require("./routes/message.route");
 
 // Use the imported routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/file-upload", fileUploadRoute);
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/message", messageRoute);
 
 // Connect to your MongoDB database
 mongoose
