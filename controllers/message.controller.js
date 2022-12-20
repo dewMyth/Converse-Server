@@ -60,6 +60,12 @@ const getConversationByOneUser = async (req, res) => {
     const conversation = await Conversation.find({
       members: { $in: [userId] },
     });
+
+    // Sort the conversations by the last message sent
+    conversation.sort((a, b) => {
+      return new Date(b.updatedAt) - new Date(a.updatedAt);
+    });
+
     res.status(200).json(conversation);
   } catch (err) {
     res.status(500).json({ message: err.message });
